@@ -1,5 +1,9 @@
-How to Run:
-docker-compose up
+### Prerequisites
+ * Docker Toolset
+ * Python Dev 3.6+
+ 
+### How to Run:
+`docker-compose up`
 
 As the worker and manager module make use of pygit2 library,
 so the installation process is defined in the Dockerfile
