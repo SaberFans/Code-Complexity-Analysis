@@ -28,7 +28,7 @@ But as each worker will clone the entire repo from github, more containers more 
 pulling down the repo.
 
 Ideally, the repo should be downloaded beforehand for each of the worker to calculate straightaway, 
-but to ease the build process, a more feasible approach is chosen.
+but to ease the build process and test for more repos, a more flexible approach is chosen.
 
 
 
