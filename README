@@ -1,0 +1,16 @@
+How to Run:
+docker-compose up
+
+As the worker and manager module make use of pygit2 library,
+so the installation process is defined in the Dockerfile
+
+Process of Complexity calculation:
+
+1. Work-stealing pattern is used
+
+2. Managers hosting commits info
+
+3. Worker steal commits and work on it
+
+4. Worker push back result to Manager node
+

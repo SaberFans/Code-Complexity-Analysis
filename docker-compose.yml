@@ -1,0 +1,35 @@
+version: '3'
+services:
+  manager:
+    build: ./manager
+    ports:
+     - "5000:5000"
+    volumes:
+     - ./manager/:/code
+    environment:
+     - repourl=https://github.com/libgit2/pygit2.git
+     - repopath=/tmp/complexity/repo
+  worker1:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker2:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker3:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker4:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
