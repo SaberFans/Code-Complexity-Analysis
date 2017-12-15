@@ -5,6 +5,7 @@
 ### How to Run:
 `docker-compose up`
 
+### Explaination:
 As the worker and manager module make use of pygit2 library,
 so the installation process is defined in the Dockerfile
 
