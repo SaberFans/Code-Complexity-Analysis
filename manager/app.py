@@ -6,25 +6,30 @@ from pygit2 import Repository
 from pygit2 import discover_repository
 from pygit2 import Tree
 import json
+import time
+import sys
+import shutil
 
 commits = []
+
 code_complexities= []
 repo = None
 
 app = Flask(__name__)
 
+start_steal = None
+end_steal = None
 def setuprepo():
 	# pull the repo
-	from pygit2 import clone_repository
-	repo_url = os.getenv('repourl','https://github.com/libgit2/pygit2.git')
-	repo_path = os.getenv('repopath','/tmp/coplexity/repo')
+	from git import Repo
+	current_working_directory = os.environ['repopath']
+	repo_url = os.getenv('repourl', 'https://github.com/faif/python-patterns.git')
+	if os.path.exists(current_working_directory):
+		shutil.rmtree(current_working_directory)
+	
+	Repo.clone_from(repo_url, current_working_directory)
 
-	if not os.path.exists(repo_path):
-		os.makedirs(repo_path)
-
-	# for some reason this isn't working
-	# repo = clone_repository('https://github.com/libgit2/pygit2.git', '/path/to/create/repository')
-	current_working_directory = '/repo/test'
+	# create different repo here
 	global repo
 	repo = Repository(discover_repository(current_working_directory))
 
@@ -38,10 +43,7 @@ def setuprepo():
 def submit():
 	complexity = json.loads(request.data)
 	global code_complexities
-	code_complexities.append(complexity)
-	print('=========')
-	print(complexity)
-	print('=========')    
+	code_complexities.append(complexity) 
 	return 'OK, 200'
 # submit aggregate all the complexity details
 @app.route('/show')
@@ -64,21 +66,39 @@ def entrysearch(entries, commit, isTree):
 
 @app.route('/steal') 
 def steal():
+	global start_steal
+	if not start_steal:
+		# start count
+		start_steal = time.time()
 	entries = []
 	if commits:
 		# pop one commit off the list, hand it to worker
 		commit = commits.pop()
+		print('left commits to process'+str(len(commits)), file=sys.stdout)
 		entrysearch(entries, commit, False)
 		commitEntry = {}
 		commitEntry['cid'] = str(commit.id)
 		commitEntry['entries'] = entries
 		return jsonify(commitEntry)
 	else:
+		# end of counting
+		# stop the count once there's no more to steal
+		global end_steal
+		if not end_steal:
+			end_steal = time.time()
 		return jsonify({})
 
+
 @app.route('/')
-def hello():
-	return 'Hello World!\n'
+def getTime():
+	if start_steal and end_steal:
+		return str(end_steal-start_steal)
+	else:
+		return 'Not Finished'
+
+@app.route('/num')
+def getCommitNum():
+	return str(len(commits))
 
 if __name__ == "__main__":
 	setuprepo()

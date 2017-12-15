@@ -9,8 +9,8 @@ RUN touch /root/.ssh/known_hosts
 
 RUN ssh-keygen -R github.com
 
-WORKDIR /repo
-RUN git clone https://github.com/SaberFans/test.git
+ENV repopath /repo
+ENV repourl https://github.com/nryoung/algorithms.git
 
 WORKDIR /tmp
 

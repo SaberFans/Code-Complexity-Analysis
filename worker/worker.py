@@ -3,8 +3,19 @@ import json
 from pygit2 import Repository
 from pygit2 import discover_repository
 from radon.visitors import ComplexityVisitor
+import os
+import shutil
 
-current_working_directory = '/repo/test'
+# pull the repo
+from git import Repo
+current_working_directory = os.environ['repopath']
+repo_url = os.getenv('repourl', 'https://github.com/faif/python-patterns.git')
+
+if os.path.exists(current_working_directory):
+	shutil.rmtree(current_working_directory)
+
+Repo.clone_from(repo_url, current_working_directory)
+
 repo = Repository(discover_repository(current_working_directory))
 
 while(1):
@@ -63,7 +74,7 @@ while(1):
 				cComplex = cComplex + complexsum
 				complexities.append(sourceComplex)
 			except Exception:
-				pass
+				pass 
 		commitComplex['cComplex']  = cComplex
 
 		# submit following format of playload to manager server
@@ -84,8 +95,6 @@ while(1):
 			}
 		'''
 		import sys
-		print(commitComplex, file=sys.stdout)
 		cmitComplexPayload = json.dumps(commitComplex)
 		requests.post('http://manager:5000/submit', data = cmitComplexPayload)
-		time.sleep(10)
 

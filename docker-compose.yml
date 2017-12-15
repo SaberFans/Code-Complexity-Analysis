@@ -6,9 +6,6 @@ services:
      - "5000:5000"
     volumes:
      - ./manager/:/code
-    environment:
-     - repourl=https://github.com/libgit2/pygit2.git
-     - repopath=/tmp/complexity/repo
   worker1:
     build: ./worker
     depends_on:
@@ -28,6 +25,102 @@ services:
     volumes:
      - ./worker/:/code
   worker4:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker5:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker6:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker7:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker8:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker9:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker10:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker11:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker12:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker13:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker14:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker15:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker16:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker17:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker18:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker19:
+    build: ./worker
+    depends_on:
+      - manager
+    volumes:
+     - ./worker/:/code
+  worker20:
     build: ./worker
     depends_on:
       - manager

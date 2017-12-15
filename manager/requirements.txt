@@ -2,3 +2,4 @@ flask
 redis
 pygit2
 requests
+gitpython
