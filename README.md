@@ -9,7 +9,7 @@
 As the worker and manager module make use of pygit2 library,
 so the installation process is defined in the Dockerfile
 
-Process of Complexity calculation:
+### Process of Complexity calculation:
 
 1. Work-stealing pattern is used
 
@@ -19,6 +19,7 @@ Process of Complexity calculation:
 
 4. Worker push back result to Manager node
 
+### Result
 
 The result is documented in RESULT and graphs are generated as Figure_1 and Figure_2
 
